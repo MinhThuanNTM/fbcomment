@@ -6,10 +6,70 @@
     <title>Bình luận bằng Facebook</title>
 
     <!-- Facebook SDK -->
-    <div id="fb-root"></div>
-    <script async defer crossorigin="anonymous"
-      src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v19.0&appId=815820762798641"
+    <script
+      async
+      defer
+      crossorigin="anonymous"
+      src="https://connect.facebook.net/en_US/sdk.js"
     ></script>
+    <script>
+      window.fbAsyncInit = function () {
+        FB.init({
+          appId: "815820762798641", // 🔁 Thay YOUR_APP_ID bằng App ID Facebook thật
+          cookie: true,
+          xfbml: true,
+          version: "v15.0",
+        });
+
+        FB.AppEvents.logPageView();
+
+        FB.getLoginStatus(function (response) {
+          statusChangeCallback(response);
+        });
+      };
+      (function (d, s, id) {
+        var js,
+          fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) {
+          return;
+        }
+        js = d.createElement(s);
+        js.id = id;
+        js.src = "https://connect.facebook.net/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+      })(document, "script", "facebook-jssdk");
+      function statusChangeCallback(response) {
+        console.log(response);
+
+        if (response.status === "connected") {
+          FB.api("/me?fields=name,picture", function (user) {
+            document.getElementById("user-name").textContent =
+              "Xin chào, " + user.name;
+            document.getElementById("login-btn").style.display = "none";
+            document.getElementById("comment-box").style.display = "block";
+
+            // Lưu người dùng
+            window.currentUser = {
+              name: user.name,
+              avatar: user.picture.data.url,
+            };
+          });
+        }
+      }
+
+      function loginWithFacebook() {
+        FB.login(
+          function (response) {
+            if (response.authResponse) {
+              statusChangeCallback(response);
+            } else {
+              alert("Bạn đã hủy đăng nhập.");
+            }
+          },
+          { scope: "public_profile,email" }
+        );
+      }
+    </script>
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -69,12 +129,6 @@
       <p id="user-name" class="mt-4 font-semibold text-gray-700"></p>
     </div>
 
-    <div
-      class="fb-comments"
-      data-href="https://fbcomment-bhgh.vercel.app"
-      data-width="100%"
-      data-numposts="5"
-    ></div>
     <!-- Hộp bình luận -->
     <div
       id="comment-box"
@@ -110,25 +164,45 @@
           return;
         }
 
+        // Tạo bình luận mới
+        const newComment = {
+          name: window.currentUser?.name || "Người dùng ẩn danh",
+          avatar:
+            window.currentUser?.avatar || "https://via.placeholder.com/40",
+          content: commentText,
+          createdAt: new Date().toISOString(),
+        };
+
+        // Lưu vào localStorage
+        let comments = JSON.parse(localStorage.getItem("comments")) || [];
+        comments.push(newComment);
+        localStorage.setItem("comments", JSON.stringify(comments));
+
+        // Thêm vào UI
+        renderComment(newComment);
+
+        commentInput.value = "";
+      }
+
+      function renderComment(comment) {
         const commentList = document.getElementById("comments-list");
         const commentDiv = document.createElement("div");
         commentDiv.className = "comment-item flex gap-3 items-start mb-4";
 
         // Avatar
         const avatarImg = document.createElement("img");
-        avatarImg.src =
-          window.currentUser?.avatar || "https://via.placeholder.com/40";
+        avatarImg.src = comment.avatar;
         avatarImg.className = "w-10 h-10 rounded-full";
 
         // Nội dung bình luận
         const contentDiv = document.createElement("div");
         const author = document.createElement("div");
         author.className = "text-sm font-semibold text-gray-800";
-        author.textContent = window.currentUser?.name || "Người dùng ẩn danh";
+        author.textContent = comment.name;
 
         const content = document.createElement("div");
         content.className = "text-sm text-gray-700";
-        content.textContent = commentText;
+        content.textContent = comment.content;
 
         contentDiv.appendChild(author);
         contentDiv.appendChild(content);
@@ -136,9 +210,15 @@
         commentDiv.appendChild(avatarImg);
         commentDiv.appendChild(contentDiv);
         commentList.appendChild(commentDiv);
-
-        commentInput.value = "";
       }
+
+      // Load bình luận khi mở trang
+      window.onload = function () {
+        const comments = JSON.parse(localStorage.getItem("comments")) || [];
+        comments.forEach((comment) => {
+          renderComment(comment);
+        });
+      };
     </script>
   </body>
 </html>
