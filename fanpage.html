@@ -137,6 +137,31 @@
       <div id="comment-display" class="mt-4"></div>
     </div>
 
+
+    <!-- Hộp bình luận -->
+    <div
+      id="comment-box"
+      style="display: none"
+      class="max-w-xl mx-auto bg-white p-6 rounded-lg shadow"
+    >
+      <h3 class="text-xl font-bold mb-4 text-gray-800">Viết bình luận</h3>
+      <textarea
+        id="comment-input"
+        placeholder="Nhập bình luận..."
+        class="w-full h-24 p-3 border border-gray-300 rounded mb-4"
+      ></textarea>
+      <button
+        onclick="postComment()"
+        class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700"
+      >
+        Gửi bình luận
+      </button>
+
+      <div id="comments-list" class="mt-6">
+        <!-- Các bình luận sẽ hiển thị ở đây -->
+      </div>
+    </div>
+
     <!-- Script bình luận -->
     <script>
       function postComment() {
