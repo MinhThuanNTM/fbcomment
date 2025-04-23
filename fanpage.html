@@ -1,16 +1,17 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Facebook Login và Bình luận</title>
+    <title>Bình luận bằng Facebook</title>
+
+    <!-- Facebook SDK -->
     <script
       async
       defer
       crossorigin="anonymous"
       src="https://connect.facebook.net/en_US/sdk.js"
     ></script>
-
     <script>
       window.fbAsyncInit = function () {
         FB.init({
@@ -56,7 +57,7 @@
         }
       }
 
-      function facebookLogin() {
+      function loginWithFacebook() {
         FB.login(
           function (response) {
             if (response.authResponse) {
@@ -69,17 +70,22 @@
         );
       }
     </script>
+
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f1f5f9;
+      }
+
+      .comment-item img {
+        object-fit: cover;
+      }
+    </style>
   </head>
   <body>
-    <div id="fb-root"></div>
-    <script
-      async
-      defer
-      crossorigin="anonymous"
-      src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v22.0&appId=1878910939600146"
-    ></script>
-
     <!-- Header -->
     <header
       class="bg-orange-500 text-white py-4 px-6 flex flex-col md:flex-row md:justify-between md:items-center"
@@ -103,41 +109,18 @@
       </nav>
     </header>
     <!-- Header End -->
-
-    <h2>Đăng nhập vào Facebook và để lại bình luận</h2>
-    <div id="status"></div>
-    <div id="fb-root"></div>
-    <script
-      async
-      defer
-      crossorigin="anonymous"
-      src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v22.0&appId=1878910939600146"
-    ></script>
-    <button
-      onclick="facebookLogin()"
-      class="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600"
-    >
-      Đăng nhập với Facebook
-    </button>
-
-    <p id="user-name" class="mt-4 font-semibold text-gray-700"></p>
-    <div id="comment-section" style="display: none" class="mt-6">
-      <h3>Để lại bình luận</h3>
-      <textarea
-        id="comment"
-        class="border p-2 w-full"
-        placeholder="Viết bình luận của bạn..."
-      ></textarea
-      ><br />
+    <!--Header-->
+    <!-- Đăng nhập -->
+    <div class="text-center mb-6">
       <button
-        onclick="postComment()"
-        class="bg-green-500 text-white py-2 px-4 rounded-md hover:bg-green-600"
+        id="login-btn"
+        onclick="loginWithFacebook()"
+        class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700"
       >
-        Đăng bình luận
+        Đăng nhập bằng Facebook
       </button>
-      <div id="comment-display" class="mt-4"></div>
+      <p id="user-name" class="mt-4 font-semibold text-gray-700"></p>
     </div>
-
 
     <!-- Hộp bình luận -->
     <div
@@ -208,8 +191,6 @@
         const contentDiv = document.createElement("div");
         const author = document.createElement("div");
         author.className = "text-sm font-semibold text-gray-800";
-        console.log(author);
-
         author.textContent = comment.name;
 
         const content = document.createElement("div");
