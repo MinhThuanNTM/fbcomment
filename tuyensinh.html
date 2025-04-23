@@ -1,0 +1,132 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Xét Tuyển Đại học FPT</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-orange-50 min-h-screen">
+    <!-- Header -->
+    <header class="bg-orange-500 text-white py-4 px-6 flex flex-col md:flex-row justify-between items-center w-full shadow-md">
+        <div class="text-center md:text-left">
+            <h1 class="text-3xl font-bold leading-tight">Tuyển sinh Đại học FPT</h1>
+            <p class="text-base">Học tập - Sáng tạo - Thành công</p>
+        </div>
+        <nav class="flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-8 text-lg font-medium">
+            <a href="index.html" class="hover:underline transition duration-200">Giới thiệu</a>
+            <a href="chuongtrinhdaotao.html" class="hover:underline transition duration-200">Chương trình đào tạo</a>
+            <a href="tuyensinh.html" class="hover:underline transition duration-200">Tuyển sinh</a>
+            <a href="fanpage.html" class="hover:underline transition duration-200">Fanpage</a>
+        </nav>
+    </header>
+
+    <div class="max-w-4xl mx-auto bg-white p-6 md:p-10 rounded-xl shadow-lg mt-10">
+        <h1 class="text-3xl font-bold text-orange-600 mb-6 text-center">Xét Tuyển Đại học FPT</h1>
+
+        <form action="#" method="post" id="formXetTuyen" class="space-y-6">
+            <!-- Chọn 3 môn xét tuyển THPT -->
+            <div class="space-y-4">
+                <p class="font-semibold text-gray-700">Chọn 3 môn bất kỳ để xét tuyển:</p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <select name="mon1" required class="border p-2 rounded-lg">
+                        <option value="">-- Môn 1 --</option>
+                        <option>Toán</option>
+                        <option>Văn</option>
+                        <option>Anh</option>
+                        <option>Lý</option>
+                        <option>Hóa</option>
+                        <option>Sinh</option>
+                        <option>Sử</option>
+                        <option>Địa</option>
+                    </select>
+                    <select name="mon2" required class="border p-2 rounded-lg">
+                        <option value="">-- Môn 2 --</option>
+                        <option>Toán</option>
+                        <option>Văn</option>
+                        <option>Anh</option>
+                        <option>Lý</option>
+                        <option>Hóa</option>
+                        <option>Sinh</option>
+                        <option>Sử</option>
+                        <option>Địa</option>
+                    </select>
+                    <select name="mon3" required class="border p-2 rounded-lg">
+                        <option value="">-- Môn 3 --</option>
+                        <option>Toán</option>
+                        <option>Văn</option>
+                        <option>Anh</option>
+                        <option>Lý</option>
+                        <option>Hóa</option>
+                        <option>Sinh</option>
+                        <option>Sử</option>
+                        <option>Địa</option>
+                    </select>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+                    <input type="number" step="0.01" name="diem1" placeholder="Điểm môn 1" class="border p-2 rounded-lg" required>
+                    <input type="number" step="0.01" name="diem2" placeholder="Điểm môn 2" class="border p-2 rounded-lg" required>
+                    <input type="number" step="0.01" name="diem3" placeholder="Điểm môn 3" class="border p-2 rounded-lg" required>
+                </div>
+            </div>
+
+            <!-- Gửi -->
+            <div class="text-center pt-4">
+                <button type="submit" class="bg-orange-500 hover:bg-orange-600 text-white px-6 py-2 rounded-xl">Gửi xét tuyển</button>
+            </div>
+        </form>
+
+        <div id="ketQua" class="mt-6 text-center text-lg font-medium text-green-600 hidden">
+            ✅ Điểm xét tuyển của bạn đã được gửi!
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('formXetTuyen');
+        const ketQua = document.getElementById('ketQua');
+
+        form.addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            const formData = new FormData(form);
+            const diem1 = parseFloat(formData.get('diem1'));
+            const diem2 = parseFloat(formData.get('diem2'));
+            const diem3 = parseFloat(formData.get('diem3'));
+            const tongDiem = diem1 + diem2 + diem3;
+
+            const data = {
+                mon1: formData.get('mon1'),
+                diem1: diem1,
+                mon2: formData.get('mon2'),
+                diem2: diem2,
+                mon3: formData.get('mon3'),
+                diem3: diem3,
+                tongDiem: tongDiem.toFixed(2)
+            };
+
+            try {
+                await fetch('https://script.google.com/macros/s/AKfycbxo5mGXbpTjfc8pIXcFx3v4Pc1sJFwT2eA7vWKSHza1n0ExgJNG1qMWTNs5BysRsz-zjw/exec', {
+                    method: 'POST',
+                    body: JSON.stringify(data),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    mode: 'no-cors'
+                });
+
+                ketQua.textContent = `✅ Tổng điểm xét tuyển: ${data.tongDiem} | Dữ liệu đã gửi thành công!`;
+                ketQua.classList.remove('hidden');
+
+                setTimeout(() => {
+                    form.reset();
+                    ketQua.classList.add('hidden');
+                }, 3000);
+            } catch (error) {
+                console.error('Lỗi:', error);
+                ketQua.textContent = '❌ Có lỗi xảy ra khi gửi dữ liệu';
+                ketQua.classList.remove('hidden');
+            }
+        });
+    </script>
+</body>
+</html>

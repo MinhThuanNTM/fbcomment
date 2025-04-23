@@ -1,0 +1,208 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Facebook Login và Bình luận</title>
+    <script
+      async
+      defer
+      crossorigin="anonymous"
+      src="https://connect.facebook.net/en_US/sdk.js"
+    ></script>
+
+    <script>
+      window.fbAsyncInit = function () {
+        FB.init({
+          appId: "815820762798641", // 🔁 Thay YOUR_APP_ID bằng App ID Facebook thật
+          cookie: true,
+          xfbml: true,
+          version: "v15.0",
+        });
+
+        FB.AppEvents.logPageView();
+
+        FB.getLoginStatus(function (response) {
+          statusChangeCallback(response);
+        });
+      };
+      (function (d, s, id) {
+        var js,
+          fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) {
+          return;
+        }
+        js = d.createElement(s);
+        js.id = id;
+        js.src = "https://connect.facebook.net/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+      })(document, "script", "facebook-jssdk");
+      function statusChangeCallback(response) {
+        console.log(response);
+
+        if (response.status === "connected") {
+          FB.api("/me?fields=name,picture", function (user) {
+            document.getElementById("user-name").textContent =
+              "Xin chào, " + user.name;
+            document.getElementById("login-btn").style.display = "none";
+            document.getElementById("comment-box").style.display = "block";
+
+            // Lưu người dùng
+            window.currentUser = {
+              name: user.name,
+              avatar: user.picture.data.url,
+            };
+          });
+        }
+      }
+
+      function loginWithFacebook() {
+        FB.login(
+          function (response) {
+            if (response.authResponse) {
+              statusChangeCallback(response);
+            } else {
+              alert("Bạn đã hủy đăng nhập.");
+            }
+          },
+          { scope: "public_profile" }
+        );
+      }
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body>
+    <div id="fb-root"></div>
+    <script
+      async
+      defer
+      crossorigin="anonymous"
+      src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v22.0&appId=1878910939600146"
+    ></script>
+
+    <!-- Header -->
+    <header
+      class="bg-orange-500 text-white py-4 px-6 flex flex-col md:flex-row md:justify-between md:items-center"
+    >
+      <!-- Logo và tiêu đề -->
+      <div class="mb-4 md:mb-0">
+        <h1 class="text-2xl font-bold">Tuyển sinh Đại học FPT</h1>
+        <p class="text-sm">Học tập - Sáng tạo - Thành công</p>
+      </div>
+
+      <!-- Menu điều hướng -->
+      <nav
+        class="flex flex-col md:flex-row md:items-center space-y-2 md:space-y-0 md:space-x-6"
+      >
+        <a href="index.html" class="hover:underline">Giới thiệu</a>
+        <a href="chuongtrinhdaotao.html" class="hover:underline"
+          >Chương trình đào tạo</a
+        >
+        <a href="tuyensinh.html" class="hover:underline">Tuyển sinh</a>
+        <a href="fanpage.html" class="hover:underline">Fanpage</a>
+      </nav>
+    </header>
+    <!-- Header End -->
+
+    <h2>Đăng nhập vào Facebook và để lại bình luận</h2>
+    <div id="status"></div>
+    <div id="fb-root"></div>
+    <script
+      async
+      defer
+      crossorigin="anonymous"
+      src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v22.0&appId=1878910939600146"
+    ></script>
+    <button
+      onclick="facebookLogin()"
+      class="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600"
+    >
+      Đăng nhập với Facebook
+    </button>
+
+    <div id="comment-section" style="display: none" class="mt-6">
+      <h3>Để lại bình luận</h3>
+      <textarea
+        id="comment"
+        class="border p-2 w-full"
+        placeholder="Viết bình luận của bạn..."
+      ></textarea
+      ><br />
+      <button
+        onclick="postComment()"
+        class="bg-green-500 text-white py-2 px-4 rounded-md hover:bg-green-600"
+      >
+        Đăng bình luận
+      </button>
+      <div id="comment-display" class="mt-4"></div>
+    </div>
+
+    <!-- Script bình luận -->
+    <script>
+      function postComment() {
+        const commentInput = document.getElementById("comment-input");
+        const commentText = commentInput.value.trim();
+
+        if (commentText === "") {
+          alert("Bạn chưa nhập nội dung bình luận!");
+          return;
+        }
+
+        // Tạo bình luận mới
+        const newComment = {
+          name: window.currentUser?.name || "Người dùng ẩn danh",
+          avatar:
+            window.currentUser?.avatar || "https://via.placeholder.com/40",
+          content: commentText,
+          createdAt: new Date().toISOString(),
+        };
+
+        // Lưu vào localStorage
+        let comments = JSON.parse(localStorage.getItem("comments")) || [];
+        comments.push(newComment);
+        localStorage.setItem("comments", JSON.stringify(comments));
+
+        // Thêm vào UI
+        renderComment(newComment);
+
+        commentInput.value = "";
+      }
+
+      function renderComment(comment) {
+        const commentList = document.getElementById("comments-list");
+        const commentDiv = document.createElement("div");
+        commentDiv.className = "comment-item flex gap-3 items-start mb-4";
+
+        // Avatar
+        const avatarImg = document.createElement("img");
+        avatarImg.src = comment.avatar;
+        avatarImg.className = "w-10 h-10 rounded-full";
+
+        // Nội dung bình luận
+        const contentDiv = document.createElement("div");
+        const author = document.createElement("div");
+        author.className = "text-sm font-semibold text-gray-800";
+        author.textContent = comment.name;
+
+        const content = document.createElement("div");
+        content.className = "text-sm text-gray-700";
+        content.textContent = comment.content;
+
+        contentDiv.appendChild(author);
+        contentDiv.appendChild(content);
+
+        commentDiv.appendChild(avatarImg);
+        commentDiv.appendChild(contentDiv);
+        commentList.appendChild(commentDiv);
+      }
+
+      // Load bình luận khi mở trang
+      window.onload = function () {
+        const comments = JSON.parse(localStorage.getItem("comments")) || [];
+        comments.forEach((comment) => {
+          renderComment(comment);
+        });
+      };
+    </script>
+  </body>
+</html>

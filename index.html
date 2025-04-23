@@ -1,224 +1,218 @@
 ﻿<!DOCTYPE html>
 <html lang="vi">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Bình luận bằng Facebook</title>
-
-    <!-- Facebook SDK -->
-    <script
-      async
-      defer
-      crossorigin="anonymous"
-      src="https://connect.facebook.net/en_US/sdk.js"
-    ></script>
-    <script>
-      window.fbAsyncInit = function () {
-        FB.init({
-          appId: "815820762798641", // 🔁 Thay YOUR_APP_ID bằng App ID Facebook thật
-          cookie: true,
-          xfbml: true,
-          version: "v15.0",
-        });
-
-        FB.AppEvents.logPageView();
-
-        FB.getLoginStatus(function (response) {
-          statusChangeCallback(response);
-        });
-      };
-      (function (d, s, id) {
-        var js,
-          fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) {
-          return;
-        }
-        js = d.createElement(s);
-        js.id = id;
-        js.src = "https://connect.facebook.net/en_US/sdk.js";
-        fjs.parentNode.insertBefore(js, fjs);
-      })(document, "script", "facebook-jssdk");
-      function statusChangeCallback(response) {
-        console.log(response);
-
-        if (response.status === "connected") {
-          FB.api("/me?fields=name,picture", function (user) {
-            document.getElementById("user-name").textContent =
-              "Xin chào, " + user.name;
-            document.getElementById("login-btn").style.display = "none";
-            document.getElementById("comment-box").style.display = "block";
-
-            // Lưu người dùng
-            window.currentUser = {
-              name: user.name,
-              avatar: user.picture.data.url,
-            };
-          });
-        }
-      }
-
-      function loginWithFacebook() {
-        FB.login(
-          function (response) {
-            if (response.authResponse) {
-              statusChangeCallback(response);
-            } else {
-              alert("Bạn đã hủy đăng nhập.");
-            }
-          },
-          { scope: "public_profile" }
-        );
-      }
-    </script>
-
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        background-color: #f1f5f9;
-        padding: 20px;
-      }
-
-      .comment-item img {
-        object-fit: cover;
-      }
-    </style>
-  </head>
-  <body>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tuyển sinh Đại học FPT</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fade { animation: fadeIn 1s ease-in-out; }
+  </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
     <!--Header-->
-    <header
-      class="w-screen bg-orange-500 text-white py-4 px-6 flex flex-col md:flex-row md:justify-between md:items-center"
-    >
-      <!-- Logo và tiêu đề -->
-      <div class="mb-4 md:mb-0 flex flex-col items-start animate-fade-slide-in">
-        <div class="bg-white p-2 rounded-lg shadow-md">
-          <img
-            src="assets/Logo_Trường_Đại_học_FPT.svg.png"
-            alt="Logo Đại học FPT"
-            class="h-14 w-auto"
-          />
+    <header class="bg-orange-500 text-white py-4 px-6 flex flex-col md:flex-row md:justify-between md:items-center">
+        <!-- Logo và tiêu đề -->
+        <div class="mb-4 md:mb-0 flex flex-col items-start animate-fade-slide-in">
+           
+
+
+            <p class="text-sm mt-1">Học tập - Sáng tạo - Thành công</p>
         </div>
 
-        <p class="text-sm mt-1">Học tập - Sáng tạo - Thành công</p>
-      </div>
-
-      <!-- Menu điều hướng -->
-      <nav
-        class="flex flex-col md:flex-row md:items-center space-y-2 md:space-y-0 md:space-x-6"
-      >
-        <a href="index.html" class="hover:underline">Giới thiệu</a>
-        <a href="chuongtrinhdaotao.html" class="hover:underline"
-          >Chương trình đào tạo</a
-        >
-        <a href="tuyensinh.html" class="hover:underline">Tuyển sinh</a>
-        <a href="fanpage.html" class="hover:underline">Fanpage</a>
-      </nav>
+        <!-- Menu điều hướng -->
+        <nav class="flex flex-col md:flex-row md:items-center space-y-2 md:space-y-0 md:space-x-6">
+            <a href="index.html" class="hover:underline">Giới thiệu</a>
+            <a href="chuongtrinhdaotao.html" class="hover:underline">Chương trình đào tạo</a>
+            <a href="tuyensinh.html" class="hover:underline">Tuyển sinh</a>
+            <a href="fanpage.html" class="hover:underline">Fanpage</a>
+        </nav>
     </header>
     <!--Header-->
-    <!-- Đăng nhập -->
-    <div class="text-center mb-6">
-      <button
-        id="login-btn"
-        onclick="loginWithFacebook()"
-        class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700"
-      >
-        Đăng nhập bằng Facebook
-      </button>
-      <p id="user-name" class="mt-4 font-semibold text-gray-700"></p>
-    </div>
+    <!-- Giới thiệu -->
+    <section class="relative h-[500px] overflow-hidden animate-fade" id="slideshow">
+        <!-- Các ảnh nền -->
+        <div class="absolute inset-0 transition-opacity duration-1000 bg-cover bg-center slide" style="background-image: url('assets/FPT-1.jpg'); opacity: 1;"></div>
+        <div class="absolute inset-0 transition-opacity duration-1000 bg-cover bg-center slide" style="background-image: url('assets/sinhvienfpt.jpg'); opacity: 0;"></div>
+        <div class="absolute inset-0 transition-opacity duration-1000 bg-cover bg-center slide" style="background-image: url('assets/truongfpt.png'); opacity: 0;"></div>
 
-    <!-- Hộp bình luận -->
-    <div
-      id="comment-box"
-      style="display: none"
-      class="max-w-xl mx-auto bg-white p-6 rounded-lg shadow"
-    >
-      <h3 class="text-xl font-bold mb-4 text-gray-800">Viết bình luận</h3>
-      <textarea
-        id="comment-input"
-        placeholder="Nhập bình luận..."
-        class="w-full h-24 p-3 border border-gray-300 rounded mb-4"
-      ></textarea>
-      <button
-        onclick="postComment()"
-        class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700"
-      >
-        Gửi bình luận
-      </button>
+        <!-- Overlay đen mờ -->
+        <div class="absolute inset-0 bg-black bg-opacity-50"></div>
 
-      <div id="comments-list" class="mt-6">
-        <!-- Các bình luận sẽ hiển thị ở đây -->
-      </div>
-    </div>
+        <!-- Nội dung -->
+        <div class="relative z-10 h-full flex flex-col items-center justify-center text-white text-center px-4">
+            <h2 class="text-3xl md:text-4xl font-bold mb-4">Giới thiệu chung</h2>
+            <p class="text-lg max-w-2xl">Đại học FPT là nơi ươm mầm tài năng công nghệ và phát triển kỹ năng mềm toàn diện.</p>
+        </div>
+    </section>
 
-    <!-- Script bình luận -->
+    <!-- Script tự chuyển slide -->
     <script>
-      function postComment() {
-        const commentInput = document.getElementById("comment-input");
-        const commentText = commentInput.value.trim();
+        let currentSlide = 0;
+        const slides = document.querySelectorAll("#slideshow .slide");
 
-        if (commentText === "") {
-          alert("Bạn chưa nhập nội dung bình luận!");
-          return;
+        setInterval(() => {
+          slides[currentSlide].style.opacity = 0;
+          currentSlide = (currentSlide + 1) % slides.length;
+          slides[currentSlide].style.opacity = 1;
+        }, 4000); // Chuyển ảnh mỗi 4 giây
+    </script>
+
+
+    <!-- Lịch sử hình thành -->
+    <section class="max-w-5xl mx-auto p-6 animate-fade">
+        <h2 class="text-2xl font-bold mb-4 text-center text-orange-500">Lịch sử hình thành</h2>
+        <p class="text-lg leading-relaxed text-center">
+            Đại học FPT được thành lập vào năm 2006 bởi Tập đoàn FPT – một trong những tập đoàn công nghệ hàng đầu Việt Nam. Trường tiên phong đào tạo theo chuẩn quốc tế, kết hợp giữa học thuật và thực tiễn, hướng đến phát triển toàn diện kỹ năng cá nhân và năng lực nghề nghiệp.
+        </p>
+    </section>
+
+    <!-- Thành tích đạt được -->
+    <section class="max-w-5xl mx-auto p-6 animate-fade">
+        <h2 class="text-2xl font-bold mb-4 text-center text-orange-500">Thành tích đạt được</h2>
+        <ul class="list-disc text-lg space-y-2 pl-8">
+            <li>Top 5 trường đại học có sinh viên khởi nghiệp nhiều nhất Việt Nam.</li>
+            <li>Đạt chuẩn QS Stars 3 sao quốc tế (Anh Quốc).</li>
+            <li>90% sinh viên có việc làm trong vòng 1 năm sau tốt nghiệp.</li>
+            <li>Hợp tác với hơn 80 trường đại học và tổ chức quốc tế.</li>
+            <li>Đạt giải thưởng quốc gia về công nghệ, giáo dục và đổi mới sáng tạo.</li>
+        </ul>
+    </section>
+
+    <!-- Google Maps -->
+    <section class="max-w-5xl mx-auto p-6 animate-fade">
+        <h2 class="text-2xl font-bold text-orange-500 mb-4 text-center">Địa chỉ trường</h2>
+        <div class="w-full h-80 rounded-xl overflow-hidden shadow-lg">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3918.6099415304693!2d106.80730807435175!3d10.841132857998298!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752731176b07b1%3A0xb752b24b379bae5e!2sFPT%20University%20HCMC!5e0!3m2!1sen!2s!4v1745054539914!5m2!1sen!2s" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+    </section>
+
+    <!-- Video giới thiệu -->
+    <section class="max-w-4xl mx-auto p-6 animate-fade">
+        <h2 class="text-2xl font-bold text-orange-500 mb-4 text-center">Video giới thiệu</h2>
+        <div class="relative w-full pt-[56.25%] rounded-xl overflow-hidden shadow-lg">
+            <iframe id="video" class="absolute top-0 left-0 w-full h-full" src="https://www.youtube.com/embed/5BQ00cZzIk0?enablejsapi=1" title="Giới thiệu Đại học FPT" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-100 text-center p-6 mt-10">
+        <div class="max-w-5xl mx-auto">
+            <!-- Thông tin liên hệ -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-6">
+                <div>
+                    <h3 class="font-bold text-lg">Thông tin liên hệ</h3>
+                    <p>Địa chỉ: Số 8, đường Quang Trung, Quận Hà Đông, Hà Nội</p>
+                    <p>Hotline: <a href="tel:+84987654321" class="text-blue-500">+84 987 654 321</a></p>
+                    <p>Email: <a href="mailto:admissions@fpt.edu.vn" class="text-blue-500">admissions@fpt.edu.vn</a></p>
+                </div>
+
+                <!-- Hỗ trợ trực tuyến -->
+                <div>
+                    <h3 class="font-bold text-lg">Hỗ trợ trực tuyến</h3>
+                    <p>Chúng tôi luôn sẵn sàng giải đáp thắc mắc của bạn qua các kênh dưới đây:</p>
+                    <div class="flex justify-center gap-4 mt-4 flex-wrap">
+                        <a href="https://www.facebook.com/FPTEducationGlobal" target="_blank" class="bg-blue-600 p-2 rounded-full hover:bg-blue-700 transition">
+                            <img src="https://international.fpt.edu.vn/core_builder_v2/static/src/img/fb-icon.png" alt="Facebook" class="w-5 h-5">
+                        </a>
+                        <a href="https://www.youtube.com/channel/UCzZ1-ZyRkI9lFz5CBdxv31Q" target="_blank" class="bg-red-600 p-2 rounded-full hover:bg-red-700 transition">
+                            <img src="https://international.fpt.edu.vn/core_builder_v2/static/src/img/yt-icon.png" alt="YouTube" class="w-5 h-5">
+                        </a>
+                        <a href="https://www.instagram.com/fpteducationglobal/" target="_blank" class="bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600 p-2 rounded-full hover:brightness-110 transition">
+                            <img src="https://international.fpt.edu.vn/core_builder_v2/static/src/img/is-icon.png" alt="Instagram" class="w-5 h-5">
+                        </a>
+                        <a href="https://www.linkedin.com/company/fpt-education-global" target="_blank" class="bg-blue-800 p-2 rounded-full hover:bg-blue-900 transition">
+                            <img src="https://international.fpt.edu.vn/core_builder_v2/static/src/img/in-icon.png" alt="LinkedIn" class="w-5 h-5">
+                        </a>
+                        <a href="https://twitter.com/fpteduglobal" target="_blank" class="bg-sky-500 p-2 rounded-full hover:bg-sky-600 transition">
+                            <img src="https://international.fpt.edu.vn/core_builder_v2/static/src/img/tw-icon.png" alt="Twitter" class="w-5 h-5">
+                        </a>
+                        <a href="https://www.tiktok.com/@fpteducationglobal" target="_blank" class="bg-black p-2 rounded-full hover:brightness-125 transition">
+                            <img src="https://international.fpt.edu.vn/core_builder_v2/static/src/img/tt-icon.png" alt="TikTok" class="w-5 h-5">
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Chính sách -->
+                <div>
+                    <h3 class="font-bold text-lg">Chính sách</h3>
+                    <ul class="space-y-2 mt-2">
+                        <li><a href="chinhsachbaomat.html" class="text-blue-500 hover:text-blue-700">Chính sách bảo mật</a></li>
+                        <li><a href="dieukhoansudung.html" class="text-blue-500 hover:text-blue-700">Điều khoản sử dụng</a></li>
+                    </ul>
+                </div>
+            </div>                              
+            <p class="text-sm text-gray-500">© 2025 Đại học FPT. All rights reserved.</p>
+        </div>
+    </footer>
+
+
+    <!-- FontAwesome for social icons -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <script>
+        let player;
+
+        function onYouTubeIframeAPIReady() {
+          player = new YT.Player('video', {
+            events: {
+              'onReady': () => {
+                window.addEventListener('scroll', handleVideoVisibility);
+              }
+            }
+          });
         }
 
-        // Tạo bình luận mới
-        const newComment = {
-          name: window.currentUser?.name || "Người dùng ẩn danh",
-          avatar:
-            window.currentUser?.avatar || "https://via.placeholder.com/40",
-          content: commentText,
-          createdAt: new Date().toISOString(),
-        };
+        function handleVideoVisibility() {
+          const iframe = document.getElementById("video");
+          const rect = iframe.getBoundingClientRect();
+          const isVisible = rect.top >= 0 && rect.bottom <= window.innerHeight;
 
-        // Lưu vào localStorage
-        let comments = JSON.parse(localStorage.getItem("comments")) || [];
-        comments.push(newComment);
-        localStorage.setItem("comments", JSON.stringify(comments));
+          if (isVisible) {
+            player.playVideo();
+          } else {
+            player.pauseVideo();
+          }
+        }
 
-        // Thêm vào UI
-        renderComment(newComment);
-
-        commentInput.value = "";
-      }
-
-      function renderComment(comment) {
-        const commentList = document.getElementById("comments-list");
-        const commentDiv = document.createElement("div");
-        commentDiv.className = "comment-item flex gap-3 items-start mb-4";
-
-        // Avatar
-        const avatarImg = document.createElement("img");
-        avatarImg.src = comment.avatar;
-        avatarImg.className = "w-10 h-10 rounded-full";
-
-        // Nội dung bình luận
-        const contentDiv = document.createElement("div");
-        const author = document.createElement("div");
-        author.className = "text-sm font-semibold text-gray-800";
-        author.textContent = comment.name;
-
-        const content = document.createElement("div");
-        content.className = "text-sm text-gray-700";
-        content.textContent = comment.content;
-
-        contentDiv.appendChild(author);
-        contentDiv.appendChild(content);
-
-        commentDiv.appendChild(avatarImg);
-        commentDiv.appendChild(contentDiv);
-        commentList.appendChild(commentDiv);
-      }
-
-      // Load bình luận khi mở trang
-      window.onload = function () {
-        const comments = JSON.parse(localStorage.getItem("comments")) || [];
-        comments.forEach((comment) => {
-          renderComment(comment);
-        });
-      };
+        // Nạp API YouTube
+        const tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api";
+        const firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
     </script>
-  </body>
+
+    <script>
+          // Tiêu đề và mô tả
+          document.getElementById('main-title').innerText = content.mainTitle;
+          document.getElementById('subtitle').innerText = content.subtitle;
+          document.querySelector("section:nth-of-type(1) h2").innerText = content.introTitle;
+          document.querySelector("section:nth-of-type(1) p").innerText = content.introText;
+
+          // Ngành học
+          document.querySelector("section:nth-of-type(2) h2").innerText = content.majorsTitle;
+          const majors = document.querySelectorAll("section:nth-of-type(2) .grid div");
+          majors.forEach((div, index) => {
+            div.innerText = content.majors[index];
+          });
+
+          // Form đăng ký
+          document.querySelector("section:nth-of-type(3) h2").innerText = content.registerTitle;
+          const placeholders = content.placeholders;
+          document.querySelector("input[name='name']").placeholder = placeholders.name;
+          document.querySelector("input[name='email']").placeholder = placeholders.email;
+          document.querySelector("input[name='phone']").placeholder = placeholders.phone;
+          document.querySelector("input[name='major']").placeholder = placeholders.major;
+          document.querySelector("textarea[name='note']").placeholder = placeholders.note;
+
+          // Địa chỉ và video
+          document.querySelector("section:nth-of-type(4) h2").innerText = content.addressTitle;
+          document.querySelector("section:nth-of-type(5) h2").innerText = content.videoTitle;
+        
+    </script>
+
+</body>
 </html>

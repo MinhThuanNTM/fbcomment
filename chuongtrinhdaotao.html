@@ -1,0 +1,195 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chương trình đào tạo - Đại học FPT</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+    <style>
+        .popup-bg {
+            background-color: rgba(0, 0, 0, 0.6);
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800 scroll-smooth">
+    <!--Header-->
+    <header class="bg-orange-500 text-white py-4 px-6 flex flex-col md:flex-row md:justify-between md:items-center">
+        <!-- Logo và tiêu đề -->
+        <div class="mb-4 md:mb-0">
+            <h1 class="text-2xl font-bold">Tuyển sinh Đại học FPT</h1>
+            <p class="text-sm">Học tập - Sáng tạo - Thành công</p>
+        </div>
+
+        <!-- Menu điều hướng -->
+        <nav class="flex flex-col md:flex-row md:items-center space-y-2 md:space-y-0 md:space-x-6">
+            <a href="index.html" class="hover:underline">Giới thiệu</a>
+            <a href="chuongtrinhdaotao.html" class="hover:underline">Chương trình đào tạo</a>
+            <a href="tuyensinh.html" class="hover:underline">Tuyển sinh</a>
+            <a href="fanpage.html" class="hover:underline">Fanpage</a>
+        </nav>
+    </header>
+    <!--Header-->
+    <!-- Navigation -->
+    <nav class="bg-white py-4 shadow-md sticky top-0 z-50">
+        <div class="flex justify-center space-x-6 text-orange-600 font-semibold">
+            <a href="#cntt" class="hover:underline">Công nghệ Thông tin</a>
+            <a href="#qtkd" class="hover:underline">Quản trị Kinh doanh</a>
+            <a href="#ai" class="hover:underline">Trí tuệ Nhân tạo</a>
+            <a href="#nn" class="hover:underline">Ngôn ngữ</a>
+            <button id="openPopup" class="bg-orange-500 text-white px-4 py-1 rounded hover:bg-orange-600 transition">Tư vấn miễn phí</button>
+        </div>
+    </nav>
+
+    <!-- Nội dung -->
+    <main class="max-w-6xl mx-auto p-6 space-y-14">
+
+        <!-- CNTT -->
+        <section id="cntt" class="bg-white rounded-xl shadow-lg overflow-hidden" data-aos="fade-up">
+            <div class="grid md:grid-cols-2 gap-6">
+                <img src="assets/congnghethongtinhocgi-910x616.jpg" alt="CNTT" class="w-full h-auto object-cover">
+                <div class="p-6">
+                    <h2 class="text-3xl font-bold text-orange-500 mb-4">✅ Công nghệ Thông tin</h2>
+                    <p class="mb-3">Chuyên ngành mũi nhọn đào tạo ra các lập trình viên, kỹ sư phần mềm chất lượng cao.</p>
+                    <ul class="list-disc ml-6 space-y-2 text-gray-700">
+                        <li>Lộ trình học thực tế: lập trình C/C++, Java, .NET, Python, Web, Mobile,...</li>
+                        <li>Chuyên sâu về DevOps, an toàn thông tin, điện toán đám mây, AI, Big Data.</li>
+                        <li>Hợp tác cùng doanh nghiệp: thực tập tại FPT Software, KMS, TMA, NashTech.</li>
+                        <li>Được học tiếng Anh, tiếng Nhật để làm việc toàn cầu.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- QTKD -->
+        <section id="qtkd" class="bg-white rounded-xl shadow-lg overflow-hidden" data-aos="fade-up">
+            <div class="grid md:grid-cols-2 gap-6 flex-row-reverse">
+                <img src="assets/tongquannganhquantrikinhdoanh.jpg" alt="QTKD" class="w-full h-auto object-cover">
+                <div class="p-6">
+                    <h2 class="text-3xl font-bold text-orange-500 mb-4">✅ Quản trị Kinh doanh</h2>
+                    <p class="mb-3">Đào tạo nhà quản trị chuyên nghiệp với tư duy toàn cầu, sẵn sàng khởi nghiệp và làm việc tại các tập đoàn lớn.</p>
+                    <ul class="list-disc ml-6 space-y-2 text-gray-700">
+                        <li>Chuyên ngành: Digital Marketing, Logistics, Quản trị thương hiệu, Khởi nghiệp.</li>
+                        <li>Dự án thực tế kết hợp cùng doanh nghiệp từ năm 2.</li>
+                        <li>Phát triển kỹ năng mềm: thuyết trình, đàm phán, làm việc nhóm.</li>
+                        <li>Chứng chỉ quốc tế: IELTS, MOS, Google Marketing... </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- AI -->
+        <section id="ai" class="bg-white rounded-xl shadow-lg overflow-hidden" data-aos="fade-up">
+            <div class="grid md:grid-cols-2 gap-6">
+                <img src="assets/AI.jpg" alt="AI" class="w-full h-auto object-cover">
+                <div class="p-6">
+                    <h2 class="text-3xl font-bold text-orange-500 mb-4">✅ Trí tuệ Nhân tạo (AI)</h2>
+                    <p class="mb-3">Ngành học dẫn đầu xu hướng thời đại, giúp sinh viên làm chủ công nghệ 4.0.</p>
+                    <ul class="list-disc ml-6 space-y-2 text-gray-700">
+                        <li>Học chuyên sâu về Machine Learning, Deep Learning, NLP, Computer Vision.</li>
+                        <li>Tham gia nghiên cứu cùng FPT AI Lab, các đề tài khoa học cấp quốc tế.</li>
+                        <li>Ứng dụng AI vào thực tế: chatbot, phân tích dữ liệu khách hàng, tự động hóa.</li>
+                        <li>Cơ hội nghề nghiệp: AI Engineer, Data Scientist, Researcher.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Ngôn ngữ -->
+        <section id="nn" class="bg-white rounded-xl shadow-lg overflow-hidden" data-aos="fade-up">
+            <div class="grid md:grid-cols-2 gap-6 flex-row-reverse">
+                <img src="assets/nganh-ngon-ngu-anh-1.png" alt="Ngôn ngữ" class="w-full h-auto object-cover">
+                <div class="p-6">
+                    <h2 class="text-3xl font-bold text-orange-500 mb-4">✅ Ngôn ngữ Anh / Nhật / Hàn</h2>
+                    <p class="mb-3">Không chỉ học ngôn ngữ, sinh viên còn được trang bị kỹ năng biên – phiên dịch và văn hóa ứng xử chuyên nghiệp.</p>
+                    <ul class="list-disc ml-6 space-y-2 text-gray-700">
+                        <li>Học với giáo viên bản ngữ, giáo trình quốc tế hiện đại.</li>
+                        <li>Tham gia các hoạt động giao lưu văn hóa, học bổng trao đổi sinh viên.</li>
+                        <li>Có chứng chỉ N2, Topik 4+, IELTS 6.5+ sau khi tốt nghiệp.</li>
+                        <li>Làm việc tại công ty Nhật – Hàn – Mỹ hoặc đi du học tiếp lên cao học.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white text-center py-4 mt-10">
+        <p>&copy; 2025 Trường Đại học FPT - Website giới thiệu chương trình đào tạo</p>
+    </footer>
+
+    <!-- Popup tư vấn -->
+    <div id="popup" class="fixed inset-0 hidden items-center justify-center popup-bg z-50">
+        <div class="bg-white p-6 rounded-xl shadow-lg w-full max-w-md relative">
+            <button id="closePopup" class="absolute top-2 right-3 text-gray-500 hover:text-red-500 text-xl font-bold">&times;</button>
+            <h3 class="text-2xl font-bold text-orange-500 mb-4">Đăng ký tư vấn</h3>
+
+            <form id="adviceForm" class="space-y-4">
+                <input name="entry.989487588" type="text" placeholder="Họ và tên" required
+                       class="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500" />
+
+                <input name="entry.586214569" type="email" placeholder="Email" required
+                       class="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500" />
+
+                <input name="entry.1997642425" type="tel" placeholder="Số điện thoại" required
+                       class="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500" />
+
+                <textarea name="entry.1504298284" placeholder="Nội dung tư vấn"
+                          class="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500"
+                          rows="3"></textarea>
+
+                <button type="submit"
+                        class="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 rounded transition">
+                    Gửi tư vấn
+                </button>
+            </form>
+
+            <!-- ✅ Thông báo gửi thành công -->
+            <div id="successBox" class="hidden mt-4 text-green-600 text-center font-semibold">
+                🎉 Gửi tư vấn thành công! Chúng tôi sẽ liên hệ sớm nhất.
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('adviceForm');
+            const successBox = document.getElementById('successBox');
+
+            form.addEventListener('submit', function (e) {
+                e.preventDefault();
+
+                const formData = new FormData(form);
+
+                fetch('https://docs.google.com/forms/d/e/1FAIpQLSfZgx5nrf3T1cOlk2q8kyWDA62BrfX_bmA9R2mH1b5z53c_gg/formResponse', {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    body: formData
+                }).then(() => {
+                    form.reset();
+                    successBox.classList.remove('hidden');
+                }).catch(() => {
+                    alert("Đã xảy ra lỗi, vui lòng thử lại sau!");
+                });
+            });
+        });
+    </script>
+
+
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+    <script>
+        AOS.init();
+        document.getElementById('openPopup').addEventListener('click', function () {
+            document.getElementById('popup').classList.remove('hidden');
+            document.getElementById('popup').classList.add('flex');
+        });
+        document.getElementById('closePopup').addEventListener('click', function () {
+            document.getElementById('popup').classList.remove('flex');
+            document.getElementById('popup').classList.add('hidden');
+        });
+    </script>
+
+</body>
+</html>
